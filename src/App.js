@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import Input from './PhoneInput';
+import Input from './IpInput';
 import MyForm from './MyForm';
 
 class App extends Component {
