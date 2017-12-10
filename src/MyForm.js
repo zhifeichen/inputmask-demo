@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Form, Button } from 'antd';
 
+import PhoneInput from './PhoneInput';
 import IpInput from './IpInput';
 
 const FormItem = Form.Item;
 
 function hasErrors(fieldsError) {
+  console.log(fieldsError);
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
@@ -26,12 +28,46 @@ class MyForm extends Component {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
 
     // Only show error after a field is touched.
-    const userNameError = isFieldTouched('userName') && getFieldError('userName');
+    const phoneError = isFieldTouched('phone') && getFieldError('phone');
+    const ipError = isFieldTouched('ip') && getFieldError('ip');
+    const formLayout = {
+      wrapperCol: { span: 14 },
+      labelCol: { span: 6 },
+    }
     return (
-      <Form layout="inline" onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.handleSubmit}>
         <FormItem
-          validateStatus={userNameError ? 'error' : ''}
-          help={userNameError || ''}
+          validateStatus={phoneError ? 'error' : ''}
+          // help={phoneError || ''}
+          hasFeedback
+          label="Phone"
+          {...formLayout}
+        >
+          {getFieldDecorator('phone', {
+            rules: [{
+              required: true,
+              message: 'Please input phone No.!',
+              // validator: (rule, value, callback) => {
+              //   console.log(value);
+              //   callback();
+              // }
+            }, {
+              validator: (rule, value, callback) => {
+                console.log(value);
+                callback();
+              }
+            }],
+            initialValue: '13712341234',
+          })(
+            <PhoneInput />
+          )}
+        </FormItem>
+        <FormItem
+          validateStatus={ipError ? 'error' : ''}
+          help={ipError || ''}
+          hasFeedback
+          label="IP"
+          {...formLayout}
         >
           {getFieldDecorator('ip', {
             rules: [{ required: true, message: 'Please input ip!' }],
