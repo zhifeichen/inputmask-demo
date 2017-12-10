@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Input } from 'antd';
 import inputmask from 'inputmask';
 import PropTypes from 'prop-types';
 
@@ -22,7 +23,7 @@ class IpInput extends Component {
         inputmask('ip', { greedy: false, clearIncomplete: true }).mask(this.input);
     }
     saveRef = (input) => {
-        this.input = input;
+        this.input = input ? input.input : null;
     }
     onChange = () => {
         const { onChange } = this.props;
@@ -36,7 +37,7 @@ class IpInput extends Component {
     }
     render() {
         return (
-            <input ref={this.saveRef} onChange={this.onChange} />
+            <Input ref={this.saveRef} onChange={this.onChange} />
         );
     }
 }
